@@ -2,7 +2,8 @@
 // Design specification for Lab 1 
 // Jonathan Valvano
 // August 28, 2014
-
+#ifndef _FIXED_H_
+#define _FIXED_H_
 #include <stdint.h>
 /* Do not post, solution to lab for the book
    "Embedded Systems: Real Time Interfacing to the Arm Cortex M",
@@ -140,4 +141,5 @@ Parameter LCD display
 256000	***.**
 */
 void Fixed_uBinOut8(uint32_t n); 
+#endif
 
