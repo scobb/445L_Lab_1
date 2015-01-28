@@ -18,7 +18,6 @@
  */
  
  // Constants
- //Testing
 #define DIGIT_TO_ASCII 48
 #define FALSE 0
 #define TRUE 1
