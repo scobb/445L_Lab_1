@@ -40,6 +40,8 @@ uint32_t i;
 	Fixed_uBinOut8(12345);
 	Fixed_uBinOut8(255997);
 	Fixed_uBinOut8(256000);
+	Fixed_sDecOut3(-123);
+	Fixed_sDecOut3(123);
   /*Errors = 0;
   for(i=0; i<16; i++){
     Fixed_uBinOut8s(outTests3[i].InNumber, Buffer);
