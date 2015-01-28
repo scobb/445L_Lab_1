@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include "string.h"
 #include "UART.h"
-#include "PLL.h"
 #include "fixed.h"
 #include "inc/tm4c123gh6pm.h"
 // const will place these structures in ROM
@@ -33,9 +32,29 @@ uint32_t Errors,AnError;
 char Buffer[10];
 void main(void){ // possible main program that tests your functions
 uint32_t i;
-  Errors = 0;
+  Output_Init();              // initialize output device
+	printf("Hello world\n");
+	Fixed_uDecOut2(100000, Buffer);
+	printf(Buffer);
+	printf("\n");
+	Fixed_uDecOut2(12345, Buffer);
+	printf(Buffer);
+	printf("\n");
+	Fixed_uDecOut3(12345, Buffer);
+	printf(Buffer);
+	printf("\n");
+	Fixed_uBinOut8(12345, Buffer);
+	printf(Buffer);
+	printf("\n");
+	Fixed_uBinOut8(255997, Buffer);
+	printf(Buffer);
+	printf("\n");
+	Fixed_uBinOut8(256000, Buffer);
+	printf(Buffer);
+	printf("\n");
+  /*Errors = 0;
   for(i=0; i<16; i++){
-    Fixed_uBinOut8s(outTests3[i].InNumber,Buffer);
+    Fixed_uBinOut8s(outTests3[i].InNumber, Buffer);
     if(strcmp(Buffer, outTests3[i].OutBuffer)){
       Errors++;
       AnError = i;

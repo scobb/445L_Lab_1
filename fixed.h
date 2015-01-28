@@ -5,6 +5,9 @@
 #ifndef _FIXED_H_
 #define _FIXED_H_
 #include <stdint.h>
+#include <math.h>
+#include "string.h"
+#include "UART.h"
 /* Do not post, solution to lab for the book
    "Embedded Systems: Real Time Interfacing to the Arm Cortex M",
    ISBN: 978-1463590154, Jonathan Valvano, copyright (c) 2014
@@ -34,7 +37,7 @@
     31 to "  0.31" 
 100000 to "***.**"    */ 
 
-void Fixed_uDecOut2s(uint32_t n,  char *string);
+void Fixed_uDecOut2s(uint32_t n, char *string);
 
  /****************Fixed_uDecOut2***************
  outputs the fixed-point value on the display
@@ -49,7 +52,7 @@ void Fixed_uDecOut2s(uint32_t n,  char *string);
    102 to "  1.02" 
     31 to "  0.31" 
 100000 to "***.**"    */ 
-void Fixed_uDecOut2(uint32_t n);
+void Fixed_uDecOut2(uint32_t n, char *string);
 
  /****************Fixed_uDecOut3***************
  outputs the fixed-point value on the display
@@ -64,7 +67,7 @@ void Fixed_uDecOut2(uint32_t n);
    102 to " 0.102" 
     31 to " 0.031" 
 100000 to "**.***"    */ 
-void Fixed_uDecOut3(uint32_t n);
+void Fixed_uDecOut3(uint32_t n, char *string);
 
 /****************Fixed_sDecOut3s***************
  converts fixed point number to ASCII string
@@ -94,7 +97,7 @@ void Fixed_sDecOut3s(int32_t n, char *string);
   -102 to "-0.102" 
     31 to " 0.031" 
  */ 
-void Fixed_sDecOut3(int32_t n);
+void Fixed_sDecOut3(int32_t n, char *string);
 
 
 
@@ -118,7 +121,7 @@ Parameter output string
 255997     "999.99"
 256000     "***.**"
 */
-void Fixed_uBinOut8s(uint32_t n,  char *string); 
+void Fixed_uBinOut8s(uint32_t n, char *string); 
 
 /**************Fixed_uBinOut8***************
  unsigned 32-bit binary fixed-point with a resolution of 1/256. 
@@ -140,6 +143,6 @@ Parameter LCD display
 255997	999.99
 256000	***.**
 */
-void Fixed_uBinOut8(uint32_t n); 
+void Fixed_uBinOut8(uint32_t n, char *string); 
 #endif
 
