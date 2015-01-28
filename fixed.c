@@ -64,10 +64,8 @@ void convert(int32_t n, char* string, uint32_t fractional_digits, uint8_t is_sig
 	blank_str(string);
 	if (is_signed) {
 		// handle the signed case
-		uint8_t neg = FALSE;
 		if (n < 0) {
 			// adds negative sign if needed
-			neg = TRUE;
 			n = -n;
 			string[0] = '-';
 		}
@@ -223,7 +221,11 @@ Parameter output string
 256000     "***.**"
 */
 void Fixed_uBinOut8s(uint32_t n, char *string){
-	n = round(n * RESOLUTION);
+	//n = round(n * RESOLUTION);
+	
+	// header file used rounding in examples but test cases provided in Lab1.c seem to truncate
+	// We'll use truncation.
+	n = (uint32_t)(n * RESOLUTION);
 	convert(n, string, 2, FALSE);
 }
 

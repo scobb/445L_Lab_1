@@ -10,7 +10,31 @@ const struct outTestCase{  // used to test routines
   char OutBuffer[10];      // Output String  
 };
 typedef const struct outTestCase outTestCaseType;
-outTestCaseType outTests3[16]={ 
+outTestCaseType Fixed_uDecOut2sTest[5]={
+	  {12345, "123.45"},
+		{22100 , "221.00"},
+    {102 , "  1.02"},
+    {31 , "  0.31"},
+		{100000 , "***.**" }
+};
+
+outTestCaseType Fixed_uDecOut3sTest[5] = { 
+	  {12345 , "12.345" },
+    {22100 , "22.100"},
+    {102 , " 0.102" },
+    {31 , " 0.031" },
+		{100000 , "**.***"}
+};
+
+outTestCaseType Fixed_sDecOut3sTest[5] = {
+   {2345 , " 2.345"  },
+   {-8100 , "-8.100" },
+   {-102 , "-0.102" },
+   {31 , " 0.031" },
+	 {10000, " *.***" }
+};
+
+outTestCaseType Fixed_uBinOut8sTest[16]={ 
 {     0,  "  0.00" }, //      0/256 = 0.00  
 {     4,  "  0.01" }, //      4/256 = 0.01  
 {    10,  "  0.03" }, //     10/256 = 0.03
@@ -30,26 +54,48 @@ outTestCaseType outTests3[16]={
 };
 uint32_t Errors,AnError;
 char Buffer[10];
-void main(void){ // possible main program that tests your functions
-uint32_t i;
-  Output_Init();              // initialize output device
-	printf("Hello world\n");
-	Fixed_uDecOut2(100000);
-	Fixed_uDecOut2(12345);
-	Fixed_uDecOut3(12345);
-	Fixed_uBinOut8(12345);
-	Fixed_uBinOut8(255997);
-	Fixed_uBinOut8(256000);
-	Fixed_sDecOut3(-123);
-	Fixed_sDecOut3(123);
-	Fixed_sDecOut3(10000);
-  /*Errors = 0;
-  for(i=0; i<16; i++){
-    Fixed_uBinOut8s(outTests3[i].InNumber, Buffer);
-    if(strcmp(Buffer, outTests3[i].OutBuffer)){
-      Errors++;
-      AnError = i;
+
+int check(const char* expected, const char* found) {
+	// Checks an expected string against a given string. Outputs if an error.
+	// Errors return 1. Passes return 0.
+    if(strcmp(expected, found)){
+			printf("FAIL: Expected: %s. Found: %s\n", expected, found); 
+			return 1;
     }
+		return 0;
+}
+
+void main(void){
+  uint32_t i;
+	// initialize output device
+  Output_Init();              
+	
+	// run test suite
+	printf("Testing...\n");
+	printf("Testing Fixed_uBinOut8s...\n");
+  Errors = 0;
+  for(i=0; i<16; i++){
+    Fixed_uBinOut8s(Fixed_uBinOut8sTest[i].InNumber, Buffer);
+		Errors += check(Buffer, Fixed_uBinOut8sTest[i].OutBuffer);
   }
-  for(;;) {} /* wait forever */
+	printf("Done.\n");
+	printf("Testing Fixed_uDecOut3s...\n");
+	for (i=0; i<5; i++) {
+		Fixed_uDecOut3s(Fixed_uDecOut3sTest[i].InNumber, Buffer);
+		Errors += check(Buffer, Fixed_uDecOut3sTest[i].OutBuffer);
+	}
+	printf("Done.\n");
+	printf("Testing Fixed_uDecOut2s...\n");
+	for (i=0; i<5; i++) {
+		Fixed_uDecOut2s(Fixed_uDecOut2sTest[i].InNumber, Buffer);
+		Errors += check(Buffer, Fixed_uDecOut2sTest[i].OutBuffer);
+	}
+	printf("Done.\n");
+	printf("Testing Fixed_sDecOut3s...\n");
+	for (i=0; i<5; i++) {
+		Fixed_sDecOut3s(Fixed_sDecOut3sTest[i].InNumber, Buffer);
+		Errors += check(Buffer, Fixed_sDecOut3sTest[i].OutBuffer);
+	}
+	printf("Done.\n");
+	printf("Errors: %u\n", Errors);
 }
