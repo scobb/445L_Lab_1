@@ -23,7 +23,6 @@
 #define TRUE 1
 #define TOTAL_DISPLAYED 6
 #define BASE 10
-#define RESOLUTION 100.0/256.0
 #define MAX 99999
 #define SIGNED_MAX 9999
 
@@ -221,11 +220,9 @@ Parameter output string
 256000     "***.**"
 */
 void Fixed_uBinOut8s(uint32_t n, char *string){
-	//n = round(n * RESOLUTION);
-	
 	// header file used rounding in examples but test cases provided in Lab1.c seem to truncate
 	// We'll use truncation.
-	n = (uint32_t)(n * RESOLUTION);
+	n = n * 100 / 256;
 	convert(n, string, 2, FALSE);
 }
 

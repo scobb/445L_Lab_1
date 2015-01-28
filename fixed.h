@@ -5,7 +5,6 @@
 #ifndef _FIXED_H_
 #define _FIXED_H_
 #include <stdint.h>
-#include <math.h>
 #include "string.h"
 #include "UART.h"
 /* Do not post, solution to lab for the book
