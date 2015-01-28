@@ -16,6 +16,8 @@
  For more information about my classes, my research, and my books, see
  http://users.ece.utexas.edu/~valvano/
  */
+ 
+ // Constants
 #define DIGIT_TO_ASCII 48
 #define FALSE 0
 #define TRUE 1
@@ -25,6 +27,79 @@
 #define MAX 99999
 #define SIGNED_MAX 9999
 
+// Helper functions
+
+
+uint32_t get_remainder(uint32_t n) {
+	// gets remainder of a division of n by 10
+	int32_t quotient = n/BASE;
+	uint32_t remainder = n - quotient * BASE;
+	return n - (n/BASE) * BASE;
+}
+
+void blank_str(char* string) {
+	 // writes spaces to all characters of string, null terminates
+	 for (uint32_t i = 0; i < TOTAL_DISPLAYED; i ++) {
+		 string[i] = ' ';
+	 }
+	 string[TOTAL_DISPLAYED] = 0;
+}
+
+void output(char* string) {
+	// outputs a string followed by a newline
+	printf(string);
+	printf("\n");
+}
+
+void stars(char* string, uint32_t fractional_digits, uint8_t is_signed) {
+	 // outputs the "invalid" format
+	 for (uint32_t i = is_signed; i < TOTAL_DISPLAYED; i++) {
+		 string[i] = '*';
+	 }
+	 string[TOTAL_DISPLAYED - 1 - fractional_digits] = '.';
+}
+
+void convert(int32_t n, char* string, uint32_t fractional_digits, uint8_t is_signed) {
+	// blank the string to begin with
+	blank_str(string);
+	if (is_signed) {
+		// handle the signed case
+		uint8_t neg = FALSE;
+		if (n < 0) {
+			// adds negative sign if needed
+			neg = TRUE;
+			n = -n;
+			string[0] = '-';
+		}
+		if (n > SIGNED_MAX) {
+			// return star output if too big
+			stars(string, fractional_digits, is_signed);
+			return;
+		}
+	} else if (n > MAX) { 
+		// return star output if too big
+		stars(string, fractional_digits, is_signed);
+		return;
+	}
+	for (uint32_t i = 0; i < fractional_digits; i++) {
+		// fill in decimal portion
+		uint32_t remainder = get_remainder(n);
+	  string[TOTAL_DISPLAYED - 1 - i] = remainder + DIGIT_TO_ASCII;
+	  n = n/BASE;
+	}
+	// add decimal character
+	string[TOTAL_DISPLAYED - 1 - fractional_digits] = '.';
+	for (uint32_t i = fractional_digits + 1; i < TOTAL_DISPLAYED - is_signed; i++) {
+		// fill in integral portion
+		uint32_t remainder = get_remainder(n);
+		string[TOTAL_DISPLAYED - 1 - i] = remainder + DIGIT_TO_ASCII;
+		n = n/BASE;
+		if (n == 0) {
+		  return;
+		}
+	}
+	
+}
 /****************Fixed_uDecOut2s***************
  converts fixed point number to ASCII string
  format unsigned 32-bit with resolution 0.01
@@ -38,67 +113,6 @@
    102 to "  1.02" 
     31 to "  0.31" 
 100000 to "***.**"    */ 
-
-uint32_t get_remainder(uint32_t n) {
-	//printf("n: %u. BASE: %u\n", n, BASE);
-	int32_t quotient = n/BASE;
-	uint32_t remainder = n - quotient * BASE;
-  //printf("Remainder: %u\n", remainder);
-	return n - (n/BASE) * BASE;
-}
-
-void blank_str(char* string) {
-	 for (uint32_t i = 0; i < TOTAL_DISPLAYED; i ++) {
-		 string[i] = ' ';
-	 }
-	 string[TOTAL_DISPLAYED] = 0;
-}
-
-void output(char* string) {
-	printf(string);
-	printf("\n");
-}
-
-void stars(char* string, uint32_t fractional_digits) {
-		 for (uint32_t i = 0; i < TOTAL_DISPLAYED; i++) {
-			 string[i] = '*';
-		 }
-		 string[TOTAL_DISPLAYED - 1 - fractional_digits] = '.';
-}
-
-void convert(int32_t n, char* string, uint32_t fractional_digits, uint8_t is_signed) {
-	blank_str(string);
-	if (is_signed) {
-		uint8_t neg = FALSE;
-		if (n < 0) {
-			neg = TRUE;
-			n = -n;
-			string[0] = '-';
-		}
-		if (n > SIGNED_MAX) {
-			stars(string, fractional_digits);
-			return;
-		}
-	} else if (n > MAX) { 
-		stars(string, fractional_digits);
-		return;
-	}
-	for (uint32_t i = 0; i < fractional_digits; i++) {
-		uint32_t remainder = get_remainder(n);
-	  string[TOTAL_DISPLAYED - 1 - i] = remainder + DIGIT_TO_ASCII;
-	  n = n/BASE;
-	}
-	string[TOTAL_DISPLAYED - 1 - fractional_digits] = '.';
-	for (uint32_t i = fractional_digits + 1; i < TOTAL_DISPLAYED - is_signed; i++) {
-		uint32_t remainder = get_remainder(n);
-		string[TOTAL_DISPLAYED - 1 - i] = remainder + DIGIT_TO_ASCII;
-		n = n/BASE;
-		if (n == 0) {
-		  return;
-		}
-	}
-	
-}
 
 void Fixed_uDecOut2s(uint32_t n,  char *string){
 	convert(n, string, 2, FALSE);
@@ -119,7 +133,7 @@ void Fixed_uDecOut2s(uint32_t n,  char *string){
     31 to "  0.31" 
 100000 to "***.**"    */ 
 void Fixed_uDecOut2(uint32_t n){
-	char string[10];
+	char string[7];
 	Fixed_uDecOut2s(n, string);
 	output(string);
 }
@@ -139,7 +153,7 @@ void Fixed_uDecOut2(uint32_t n){
     31 to " 0.031" 
 100000 to "**.***"    */ 
 void Fixed_uDecOut3(uint32_t n){
-	char string[10];
+	char string[7];
 	Fixed_uDecOut3s(n, string);
 	output(string);
 }
@@ -180,7 +194,7 @@ void Fixed_sDecOut3s(int32_t n, char *string){
     31 to " 0.031" 
  */ 
 void Fixed_sDecOut3(int32_t n){
-	char string[10];
+	char string[7];
 	Fixed_sDecOut3s(n, string);
 	output(string);
 }
@@ -235,7 +249,7 @@ Parameter LCD display
 256000	***.**
 */
 void Fixed_uBinOut8(uint32_t n){
-	char string[10];
+	char string[7];
 	Fixed_uBinOut8s(n, string);
 	output(string);
 }
