@@ -416,9 +416,14 @@
               <FilePath>.\UART.c</FilePath>
             </File>
             <File>
-              <FileName>main.c</FileName>
+              <FileName>Lab1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\main.c</FilePath>
+              <FilePath>.\Lab1.c</FilePath>
+            </File>
+            <File>
+              <FileName>fixed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\fixed.c</FilePath>
             </File>
           </Files>
         </Group>

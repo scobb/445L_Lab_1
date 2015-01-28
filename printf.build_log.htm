@@ -3,7 +3,34 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\scobb_000\Documents\445L\Lab1\printf.uvproj
+C:\Users\scobb_000\Documents\445L\445L_Lab_1\printf.uvproj
 Project File Date:  01/27/2015
 
 <h2>Output:</h2>
+Rebuild target 'printf'
+assembling startup.s...
+compiling UART.c...
+compiling Lab1.c...
+Lab1.c(8): warning:  #21-D: type qualifiers are meaningless in this declaration
+  const struct outTestCase{  // used to test routines
+Lab1.c(31): warning:  #68-D: integer conversion resulted in a change of sign
+     {-8100 , "-8.100" },
+Lab1.c(32): warning:  #68-D: integer conversion resulted in a change of sign
+     {-102 , "-0.102" },
+Lab1.c(68): warning:  #951-D: return type of function "main" must be "int"
+  void main(void){
+Lab1.c: 4 warnings, 0 errors
+compiling fixed.c...
+fixed.c(35): warning:  #177-D: variable "remainder" was declared but never referenced
+        uint32_t remainder = n - quotient * BASE;
+fixed.c(49): warning:  #223-D: function "printf" declared implicitly
+        printf(string);
+fixed.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=5372 RO-data=528 RW-data=12 ZI-data=1036  
+".\printf.axf" - 0 Error(s), 6 Warning(s).
+Load "C:\\Users\\scobb_000\\Documents\\445L\\445L_Lab_1\\printf.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
