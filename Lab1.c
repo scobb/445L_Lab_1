@@ -34,24 +34,12 @@ void main(void){ // possible main program that tests your functions
 uint32_t i;
   Output_Init();              // initialize output device
 	printf("Hello world\n");
-	Fixed_uDecOut2(100000, Buffer);
-	printf(Buffer);
-	printf("\n");
-	Fixed_uDecOut2(12345, Buffer);
-	printf(Buffer);
-	printf("\n");
-	Fixed_uDecOut3(12345, Buffer);
-	printf(Buffer);
-	printf("\n");
-	Fixed_uBinOut8(12345, Buffer);
-	printf(Buffer);
-	printf("\n");
-	Fixed_uBinOut8(255997, Buffer);
-	printf(Buffer);
-	printf("\n");
-	Fixed_uBinOut8(256000, Buffer);
-	printf(Buffer);
-	printf("\n");
+	Fixed_uDecOut2(100000);
+	Fixed_uDecOut2(12345);
+	Fixed_uDecOut3(12345);
+	Fixed_uBinOut8(12345);
+	Fixed_uBinOut8(255997);
+	Fixed_uBinOut8(256000);
   /*Errors = 0;
   for(i=0; i<16; i++){
     Fixed_uBinOut8s(outTests3[i].InNumber, Buffer);

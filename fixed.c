@@ -47,13 +47,22 @@ uint32_t get_remainder(uint32_t n) {
 	return n - (n/BASE) * BASE;
 }
 
-void convert_unsigned(uint32_t n, char* string, uint32_t fractional_digits) {
-							 
-	 // spaces and null terminate off the bat
+void blank_str(char* string) {
 	 for (uint32_t i = 0; i < TOTAL_DISPLAYED; i ++) {
 		 string[i] = ' ';
 	 }
 	 string[TOTAL_DISPLAYED] = 0;
+}
+
+void output(char* string) {
+	printf(string);
+	printf("\n");
+}
+
+void convert_unsigned(uint32_t n, char* string, uint32_t fractional_digits) {
+							 
+	 // spaces and null terminate off the bat
+	 blank_str(string);
 							 
 	 // handle the too-big case
    if (n > MAX) {
@@ -83,6 +92,7 @@ void convert_unsigned(uint32_t n, char* string, uint32_t fractional_digits) {
 }	
 
 void Fixed_uDecOut2s(uint32_t n,  char *string){
+	convert_unsigned(n, string, 2);
 }
 
 
@@ -99,8 +109,10 @@ void Fixed_uDecOut2s(uint32_t n,  char *string){
    102 to "  1.02" 
     31 to "  0.31" 
 100000 to "***.**"    */ 
-void Fixed_uDecOut2(uint32_t n, char *string){
-	convert_unsigned(n, string, 2);
+void Fixed_uDecOut2(uint32_t n){
+	char string[10];
+	Fixed_uDecOut2s(n, string);
+	output(string);
 }
 
 
@@ -117,10 +129,15 @@ void Fixed_uDecOut2(uint32_t n, char *string){
    102 to " 0.102" 
     31 to " 0.031" 
 100000 to "**.***"    */ 
-void Fixed_uDecOut3(uint32_t n, char *string){
-	convert_unsigned(n, string, 3);
+void Fixed_uDecOut3(uint32_t n){
+	char string[10];
+	Fixed_uDecOut3s(n, string);
+	output(string);
 }
 
+void Fixed_uDecOut3s(uint32_t n, char* string) {
+	convert_unsigned(n, string, 3);
+}
 
 /****************Fixed_sDecOut3s***************
  converts fixed point number to ASCII string
@@ -152,7 +169,7 @@ void Fixed_sDecOut3s(int32_t n, char *string){
   -102 to "-0.102" 
     31 to " 0.031" 
  */ 
-void Fixed_sDecOut3(int32_t n, char *string){
+void Fixed_sDecOut3(int32_t n){
 }
 
 
@@ -204,9 +221,10 @@ Parameter LCD display
 255997	999.99
 256000	***.**
 */
-void Fixed_uBinOut8(uint32_t n, char *string){
-	n = round(n * RESOLUTION);
-	convert_unsigned(n, string, 2);
+void Fixed_uBinOut8(uint32_t n){
+	char string[10];
+	Fixed_uBinOut8s(n, string);
+	output(string);
 }
 
 
