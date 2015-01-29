@@ -10,28 +10,40 @@ const struct outTestCase{  // used to test routines
   char OutBuffer[10];      // Output String  
 };
 typedef const struct outTestCase outTestCaseType;
-outTestCaseType Fixed_uDecOut2sTest[5]={
+outTestCaseType Fixed_uDecOut2sTest[9]={
+		{0 , "  0.00"},
+		{1 , "  0.01"},
 	  {12345, "123.45"},
 		{22100 , "221.00"},
     {102 , "  1.02"},
     {31 , "  0.31"},
-		{100000 , "***.**" }
+		{100000 , "***.**" },
+		{999999 , "***.**"},
+		{-1 , "***.**"}
 };
 
-outTestCaseType Fixed_uDecOut3sTest[5] = { 
+outTestCaseType Fixed_uDecOut3sTest[8] = { 
+		{0 , " 0.000"},
+		{1 , " 0.001"},
 	  {12345 , "12.345" },
     {22100 , "22.100"},
     {102 , " 0.102" },
     {31 , " 0.031" },
-		{100000 , "**.***"}
+		{100000 , "**.***"},
+		{999999 , "**.***"}
 };
 
-outTestCaseType Fixed_sDecOut3sTest[5] = {
+outTestCaseType Fixed_sDecOut3sTest[10] = {
+	 {0 , " 0.000"},
+	 {1 , " 0.001"},
+	 {-1 , "-0.001"},
    {2345 , " 2.345"  },
    {-8100 , "-8.100" },
    {-102 , "-0.102" },
    {31 , " 0.031" },
-	 {10000, " *.***" }
+	 {10000, " *.***" },
+	 {-9999, "-9.999"},
+	 {-10000, " *.***"}
 };
 
 outTestCaseType Fixed_uBinOut8sTest[16]={ 
