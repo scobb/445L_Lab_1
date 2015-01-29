@@ -31,12 +31,6 @@
 // Kevin was here
 
 
-uint32_t get_remainder(uint32_t n) {
-	// gets remainder of a division of n by 10
-	int32_t quotient = n/BASE;
-	uint32_t remainder = n - quotient * BASE;
-	return n - (n/BASE) * BASE;
-}
 
 void blank_str(char* string) {
 	 // writes spaces to all characters of string, null terminates
@@ -82,7 +76,7 @@ void convert(int32_t n, char* string, uint32_t fractional_digits, uint8_t is_sig
 	}
 	for (uint32_t i = 0; i < fractional_digits; i++) {
 		// fill in decimal portion
-		uint32_t remainder = get_remainder(n);
+		uint32_t remainder = n % BASE;
 	  string[TOTAL_DISPLAYED - 1 - i] = remainder + DIGIT_TO_ASCII;
 	  n = n/BASE;
 	}
@@ -90,7 +84,7 @@ void convert(int32_t n, char* string, uint32_t fractional_digits, uint8_t is_sig
 	string[TOTAL_DISPLAYED - 1 - fractional_digits] = '.';
 	for (uint32_t i = fractional_digits + 1; i < TOTAL_DISPLAYED - is_signed; i++) {
 		// fill in integral portion
-		uint32_t remainder = get_remainder(n);
+		uint32_t remainder = n % BASE;
 		string[TOTAL_DISPLAYED - 1 - i] = remainder + DIGIT_TO_ASCII;
 		n = n/BASE;
 		if (n == 0) {
