@@ -48,6 +48,9 @@ void output(char* string) {
 
 void stars(char* string, uint32_t fractional_digits, uint8_t is_signed) {
 	 // outputs the "invalid" format
+	 if (is_signed) {
+		 string[0] = ' ';
+	 }
 	 for (uint32_t i = is_signed; i < TOTAL_DISPLAYED; i++) {
 		 string[i] = '*';
 	 }
@@ -69,7 +72,7 @@ void convert(int32_t n, char* string, uint32_t fractional_digits, uint8_t is_sig
 			stars(string, fractional_digits, is_signed);
 			return;
 		}
-	} else if (n > MAX) { 
+	} else if ((uint32_t)n > MAX) { 
 		// return star output if too big
 		stars(string, fractional_digits, is_signed);
 		return;

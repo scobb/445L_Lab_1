@@ -67,9 +67,10 @@ outTestCaseType Fixed_uBinOut8sTest[16]={
 uint32_t Errors,AnError;
 char Buffer[10];
 
-int check(const char* expected, const char* found) {
+int check(uint32_t num, const char* found, const char* expected) {
 	// Checks an expected string against a given string. Outputs if an error.
 	// Errors return 1. Passes return 0.
+	printf("%s\n", found);
     if(strcmp(expected, found)){
 			printf("FAIL: Expected: %s. Found: %s\n", expected, found); 
 			return 1;
@@ -88,25 +89,25 @@ void main(void){
   Errors = 0;
   for(i=0; i<16; i++){
     Fixed_uBinOut8s(Fixed_uBinOut8sTest[i].InNumber, Buffer);
-		Errors += check(Buffer, Fixed_uBinOut8sTest[i].OutBuffer);
+		Errors += check(Fixed_uBinOut8sTest[i].InNumber, Buffer, Fixed_uBinOut8sTest[i].OutBuffer);
   }
 	printf("Done.\n");
 	printf("Testing Fixed_uDecOut3s...\n");
-	for (i=0; i<5; i++) {
+	for (i=0; i<8; i++) {
 		Fixed_uDecOut3s(Fixed_uDecOut3sTest[i].InNumber, Buffer);
-		Errors += check(Buffer, Fixed_uDecOut3sTest[i].OutBuffer);
+		Errors += check(Fixed_uDecOut3sTest[i].InNumber, Buffer, Fixed_uDecOut3sTest[i].OutBuffer);
 	}
 	printf("Done.\n");
 	printf("Testing Fixed_uDecOut2s...\n");
-	for (i=0; i<5; i++) {
+	for (i=0; i<9; i++) {
 		Fixed_uDecOut2s(Fixed_uDecOut2sTest[i].InNumber, Buffer);
-		Errors += check(Buffer, Fixed_uDecOut2sTest[i].OutBuffer);
+		Errors += check(Fixed_uDecOut2sTest[i].InNumber, Buffer, Fixed_uDecOut2sTest[i].OutBuffer);
 	}
 	printf("Done.\n");
 	printf("Testing Fixed_sDecOut3s...\n");
-	for (i=0; i<5; i++) {
+	for (i=0; i<10; i++) {
 		Fixed_sDecOut3s(Fixed_sDecOut3sTest[i].InNumber, Buffer);
-		Errors += check(Buffer, Fixed_sDecOut3sTest[i].OutBuffer);
+		Errors += check(Fixed_sDecOut3sTest[i].InNumber, Buffer, Fixed_sDecOut3sTest[i].OutBuffer);
 	}
 	printf("Done.\n");
 	printf("Errors: %u\n", Errors);
